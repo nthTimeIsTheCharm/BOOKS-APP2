@@ -64,16 +64,19 @@ describe("all books page", () => {
 });
 
 describe("handle lists", () => {
-
-  beforeEach(()=>{
+  beforeEach(() => {
     cy.visit("https://cheery-chimera-131b01.netlify.app/#/all-books");
     cy.wait(3000);
-  })
+  });
 
   it("mark/unmark a book as 'to read'", () => {
+    //Find a book that's not on the list, add it and keep the title
     cy.get(".AllBooksListRow-label")
       .contains("Add to list")
       .first()
+      .parent()
+      .find(".AllBooksListRow-icon-wrapper")
+      .click() //Mark the book as to read
       .parent()
       .parent()
       .find(".AllBooksListRow-title")
@@ -82,14 +85,8 @@ describe("handle lists", () => {
         cy.wrap(text).as("selectedBook");
       });
 
+    //Find the book in my-books and remove it
     cy.get("@selectedBook").then((selectedBook) => {
-      cy.get(".AllBooksListRow-title")
-        .contains(selectedBook)
-        .find(".AllBooksListRow-icon-wrapper")
-        .click() //Mark the book as to read
-        .parent()
-        .eq(1) //second button to add to list
-        .click();
       cy.visit("https://cheery-chimera-131b01.netlify.app/#/my-books");
       cy.wait(1000);
       cy.get(".books-to-read")
@@ -105,9 +102,13 @@ describe("handle lists", () => {
   });
 
   it("mark/unmark a book as 'read'", () => {
+    //Find a book that's not on the list, add it and keep the title
     cy.get(".AllBooksListRow-label")
       .contains("Mark as read")
       .first()
+      .parent()
+      .find(".AllBooksListRow-icon-wrapper")
+      .click() //Mark the book as read
       .parent()
       .parent()
       .find(".AllBooksListRow-title")
@@ -116,15 +117,8 @@ describe("handle lists", () => {
         cy.wrap(text).as("selectedBook");
       });
 
+    //Find the book in my-books and remove it
     cy.get("@selectedBook").then((selectedBook) => {
-      cy.get(".AllBooksListRow-title")
-        .contains(selectedBook)
-        .first()
-        .parent()
-        .parent()
-        .find(".AllBooksListRow-icon-wrapper")
-        .first() //first button to mark as read
-        .click();
       cy.visit("https://cheery-chimera-131b01.netlify.app/#/my-books");
       cy.wait(1000);
       cy.get(".books-read")
@@ -133,51 +127,78 @@ describe("handle lists", () => {
         .parent()
         .parent()
         .parent()
-        .find(".IconButton") //only one button for read
+        .find(".IconButton") //only one button for read books
         .click();
     });
   });
-
 });
 
 describe.only("update pages", () => {
+  it("ToRead >> Reading >> UpdatePage >> Remove ", () => {
+    cy.visit("https://cheery-chimera-131b01.netlify.app/#/all-books");
+    cy.wait(3000);
 
-  it("mark a book as 'to read'", () => {
+    //Find a book that's not on the list, add it and keep the title
+    cy.get(".AllBooksListRow-label")
+      .contains("Add to list")
+      .first()
+      .parent()
+      .find(".AllBooksListRow-icon-wrapper")
+      .click() //Mark the book as to read
+      .parent()
+      .parent()
+      .find(".AllBooksListRow-title")
+      .invoke("text") // Get the title of the book just marked as to read
+      .then((text) => {
+        cy.wrap(text).as("selectedBook");
+      });
 
-  cy.visit("https://cheery-chimera-131b01.netlify.app/#/all-books");
-  cy.wait(3000);
-
-  //Find a book that's not on the list and keep the title
-  cy.get(".AllBooksListRow-label")
-    .contains("Add to list")
-    .first()
-    .parent()
-    .find(".AllBooksListRow-icon-wrapper")
-    .click() //Mark the book as to read
-    .parent()
-    .parent()
-    .find(".AllBooksListRow-title")
-    .invoke("text") // Get the title of the book just marked as to read
-    .then((text) => {
-      cy.wrap(text).as("selectedBook");
+    //Move the book to reading
+    cy.visit("https://cheery-chimera-131b01.netlify.app/#/my-books");
+    cy.get("@selectedBook").then((selectedBook) => {
+      //Find the book in to read and move it to reading
+      cy.visit("https://cheery-chimera-131b01.netlify.app/#/my-books");
+      cy.wait(1000);
+      cy.get(".books-to-read")
+        .find("strong")
+        .contains(selectedBook)
+        .parent()
+        .parent()
+        .parent()
+        .find(".AllBooksListRow-icon-wrapper")
+        .first() //1st button moves to reading
+        .click();
     });
 
-  
-  cy.get("@selectedBook").then((selectedBook) => {
-    //Find the book in my-books and remove it
-    cy.visit("https://cheery-chimera-131b01.netlify.app/#/my-books");
-    cy.wait(1000);
-    cy.get(".books-to-read")
-      .find("strong")
-      .contains(selectedBook)
-      .parent()
-      .parent()
-      .parent()
-      .find(".IconButton") //3rd button to remove from list
-      .eq(2)
-      .click();
-  });
+    /*
 
+    //Update the page
+    cy.get("@selectedBook").then((selectedBook) => {
+      cy.get(".books-to-read")
+        .find("strong")
+        .contains(selectedBook)
+        .parent()
+        .click();
+      cy.get("input").type("5");
+      cy.get("button").click();
+      cy.reload();
+      cy.get("input").should("have.value", "5");
+    });
+
+    //Delete book from reading
+    cy.get("@selectedBook").then((selectedBook) => {
+      //Find the book in my-books and remove it
+      cy.visit("https://cheery-chimera-131b01.netlify.app/#/my-books");
+      cy.wait(1000);
+      cy.get(".books-reading")
+        .find("strong")
+        .contains(selectedBook)
+        .parent()
+        .parent()
+        .parent()
+        .find(".IconButton")
+        .eq(2) //3rd button to remove from list
+        .click();
+    }); */
   });
-  
 });
