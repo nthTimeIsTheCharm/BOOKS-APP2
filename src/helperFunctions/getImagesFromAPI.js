@@ -12,7 +12,7 @@ function createApiURL(title, author) {
 async function getCoverURL(apiURL, abortControllerArray) {
   const newController = new AbortController();
 
-  if (Array.isArray(abortControllerArray)) {
+  if (Array.isArray(abortControllerArray.current)) {
     abortControllerArray.current.push(newController);
     //Guardamos dos los abortControllers para luego poder iterar sobre ellos y abortarlos uno a uno
     //Solo para AllBooksPage
