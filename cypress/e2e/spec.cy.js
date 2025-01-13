@@ -133,7 +133,7 @@ describe("handle lists", () => {
   });
 });
 
-describe.only("update pages", () => {
+describe("update pages", () => {
   it("ToRead >> Reading >> UpdatePage >> Remove ", () => {
     cy.visit("https://cheery-chimera-131b01.netlify.app/#/all-books");
     cy.wait(3000);
@@ -170,24 +170,24 @@ describe.only("update pages", () => {
         .click();
     });
 
-    /*
-
+    
     //Update the page
     cy.get("@selectedBook").then((selectedBook) => {
-      cy.get(".books-to-read")
-        .find("strong")
-        .contains(selectedBook)
-        .parent()
-        .click();
-      cy.get("input").type("5");
-      cy.get("button").click();
-      cy.reload();
-      cy.get("input").should("have.value", "5");
+      cy.get(".books-reading")
+      .find("strong")
+      .contains(selectedBook)
+      .parent()
+      .click();
+    
+    cy.get("input").type("5");
+    cy.get("button").click();
+    cy.reload();
+    cy.get("input").should("have.value", "5");
     });
-
+      
+    
     //Delete book from reading
     cy.get("@selectedBook").then((selectedBook) => {
-      //Find the book in my-books and remove it
       cy.visit("https://cheery-chimera-131b01.netlify.app/#/my-books");
       cy.wait(1000);
       cy.get(".books-reading")
@@ -199,6 +199,6 @@ describe.only("update pages", () => {
         .find(".IconButton")
         .eq(2) //3rd button to remove from list
         .click();
-    }); */
+    });
   });
 });
