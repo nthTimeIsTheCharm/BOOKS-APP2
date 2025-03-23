@@ -5,6 +5,11 @@ Bookify is a web app that allows you to keep track of your reading.
 - Track your progress as you're reading a book
 - Mark books as read
 
+## Scope limitations
+This project was focused on practicing React and SQL. As a result:
+- The app was built without a real backend, so login and multi-user functionality are not available.
+- Responsiveness was not a priority, so the app does not display well on mobile devices.
+
 ## Link to the deployed app
 [Bookify app](https://cheery-chimera-131b01.netlify.app/#/) 
 
