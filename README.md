@@ -35,8 +35,7 @@ This project was focused on practicing React and SQL. As a result:
 
 ## Backlog
 - Allow for multiple users by creating a backend and adding login functionality.
-- Adjust the design and implementation 
-- Cover more scenarios when it comes to users updating their current page.
+- Adjust the design and implementation to make the app responsive.
+- Cover more scenarios when it comes to updating the current page in a book.
 - Allow for users to add the number of pages for a given book for themselves to account for the fact that different editions of a book can have a different number of pages.
 - Consider additional functionalities.
-  
