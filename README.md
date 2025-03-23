@@ -5,12 +5,14 @@ Bookify is a web app that allows you to keep track of your reading.
 - Track your progress as you're reading a book
 - Mark books as read
 
+## Link to the deployed app
+[Bookify app](https://cheery-chimera-131b01.netlify.app/#/) 
 
 ## App routes
 
 | Route                         | Description                                  |
 | ----------------------------- | -------------------------------------------- |
-| /                             | Shows's the user's statistics                |
+| /                             | Shows the user's statistics                  |
 | /all.books                    | Shows all the books available                |
 | /book/:id/:bookstatus         | Shows a single book along with its details   |
 | /my-books                     | Shows the user's book lists                  |
@@ -28,6 +30,7 @@ Bookify is a web app that allows you to keep track of your reading.
 
 ## Backlog
 - Allow for multiple users by creating a backend and adding login functionality.
+- Adjust the design and implementation 
 - Cover more scenarios when it comes to users updating their current page.
 - Allow for users to add the number of pages for a given book for themselves to account for the fact that different editions of a book can have a different number of pages.
 - Consider additional functionalities.
